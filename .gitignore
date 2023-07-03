@@ -25,7 +25,10 @@ build/Release
 # Dependency directory
 # Commenting this out is preferred by some people, see
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
-node_modules
+argent_bank_front/node_modules
+argent_bank_server/node_modules
+
+pnpm-lock.yaml
 
 # Users Environment Variables
 .lock-wscript
