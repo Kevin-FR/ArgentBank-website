@@ -2,10 +2,13 @@
 import PropTypes from "prop-types";
 import "./style.scss";
 import logo from "./logo.png";
+import { Link } from "react-router-dom";
+
 
 const Logo = ({ size }) => (
   <div className="Logo">
-    <img src={logo} alt="logo"/>
+    <Link to="/"><img src={logo} alt="logo"/></Link>
+    
   </div>
 );
 

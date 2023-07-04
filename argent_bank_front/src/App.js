@@ -14,14 +14,14 @@ function App() {
       <header>
         <Menu />
       </header>
-      <div className="App">
+    
       <Routes>
           <Route path="/" element={<Page />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/apropos" element={<Page />} />
           <Route path="/*" element={<Error404 />} />
         </Routes>
-      </div>
+     
       <Footer />
     </Router>
   );
