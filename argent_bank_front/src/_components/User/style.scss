@@ -1,0 +1,11 @@
+.user-header{
+    color: #fff;
+    margin-bottom: 2rem;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &-button{
+        max-width: 70%;
+    }
+}

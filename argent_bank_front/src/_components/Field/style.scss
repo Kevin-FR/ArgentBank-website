@@ -20,10 +20,15 @@
       input {
           padding: 5px;
           font-size: 1.2rem;
+          
       } 
 }
 
 .inputCheckbox{
   display: flex;
   flex-direction: row;
+}
+
+.is-invalid{
+    color: red;
 }

@@ -9,7 +9,7 @@ export const FIELD_TYPES = {
   TEXTAREA: 4,
 };
 
-const Field = ({ type = FIELD_TYPES.INPUT_TEXT, className, label, name, placeholder }) => {
+const Field = ({ type = FIELD_TYPES.INPUT_TEXT, className, label, name, placeholder, onChange, errors, others}) => {
   let component;
   switch (type) {
     case FIELD_TYPES.INPUT_TEXT:
@@ -19,6 +19,9 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, className, label, name, placehol
           name={name}
           placeholder={placeholder}
           data-testid="field-testid"
+          onChange={onChange}
+          className={`inputField ${className}`}
+          {...others}
         />
       );
       break;
@@ -29,6 +32,9 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, className, label, name, placehol
           name={name}
           placeholder={placeholder}
           data-testid="field-testid"
+          onChange={onChange}
+          className={`inputField ${className}`}
+          {...others}
         />
       );
       break;
@@ -39,6 +45,8 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, className, label, name, placehol
           name={name}
           placeholder={placeholder}
           data-testid="field-testid"
+          onChange={onChange}
+          className={`inputField ${className}`}
         />
       );
       break;
@@ -52,6 +60,9 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, className, label, name, placehol
           name={name}
           placeholder={placeholder}
           data-testid="field-testid"
+          onChange={onChange}
+          className={`inputField ${className}`}
+          {...others}
         />
       );
   }
@@ -61,6 +72,7 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, className, label, name, placehol
     <div className={className} >
       <span>{name ? name : label}</span>
       {component}
+      <div className="invalid-feedback">{errors}</div>
     </div>
   );
 };
@@ -77,7 +89,8 @@ Field.defaultProps = {
   placeholder: "",
   type: FIELD_TYPES.INPUT_TEXT,
   name: "",
-  className:"inputField",
+  className:"",
+  errors: null,
 };
 
 export default Field;

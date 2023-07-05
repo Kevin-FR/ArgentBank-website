@@ -14,7 +14,7 @@ const Button = ({ title, onClick, type, className, disabled, children }) => {
         <button
           type="button"
           disabled={disabled}
-          className={className}
+          className={`button ${className}`}
           data-testid="button-test-id"
           onClick={onClick}
           title={title}
@@ -26,7 +26,7 @@ const Button = ({ title, onClick, type, className, disabled, children }) => {
       return (
         <input
           disabled={disabled}
-          className={className}
+          className={`button ${className}`}
           type="submit"
           data-testid="button-test-id"
           value={children}
@@ -39,7 +39,7 @@ const Button = ({ title, onClick, type, className, disabled, children }) => {
         <button
           type="button"
           disabled={disabled}
-          className={className}
+          className={`button ${className}`}
           data-testid="button-test-id"
           onClick={onClick}
           title={title}
@@ -65,7 +65,7 @@ Button.defaultProps = {
   type: BUTTON_TYPES.DEFAULT,
   title: "",
   children: null,
-  className: "button",
+  className: "",
 }
 
 export default Button;
