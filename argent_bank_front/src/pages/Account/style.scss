@@ -11,11 +11,17 @@
         margin: 0 auto;
         margin-top: 3rem;
         padding: 2rem;
+        .login-form{
+            .button{
+              width: 100%;
+            }  
+          }
     }
 
     &-icon {
         font-size: 5rem;
     }
+    
 }
 
 .inputReverse{

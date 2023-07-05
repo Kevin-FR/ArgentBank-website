@@ -9,7 +9,7 @@ export const FIELD_TYPES = {
   TEXTAREA: 4,
 };
 
-const Field = ({ type = FIELD_TYPES.INPUT_TEXT, className, label, name, placeholder, onChange, errors, others}) => {
+const Field = ({ type = FIELD_TYPES.INPUT_TEXT, className, label, name, placeholder, onChange, errors, others, value, disabled}) => {
   let component;
   switch (type) {
     case FIELD_TYPES.INPUT_TEXT:
@@ -20,7 +20,9 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, className, label, name, placehol
           placeholder={placeholder}
           data-testid="field-testid"
           onChange={onChange}
-          className={`inputField ${className}`}
+          className={disabled ? `inputField inputField-disabled` : `inputField`}
+          disabled = {disabled}
+          value={value}
           {...others}
         />
       );
@@ -33,7 +35,7 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, className, label, name, placehol
           placeholder={placeholder}
           data-testid="field-testid"
           onChange={onChange}
-          className={`inputField ${className}`}
+          className={`inputField`}
           {...others}
         />
       );
@@ -46,7 +48,8 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, className, label, name, placehol
           placeholder={placeholder}
           data-testid="field-testid"
           onChange={onChange}
-          className={`inputField ${className}`}
+          className={`inputField`}
+          value={value}
         />
       );
       break;
@@ -62,6 +65,7 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, className, label, name, placehol
           data-testid="field-testid"
           onChange={onChange}
           className={`inputField ${className}`}
+          value={value}
           {...others}
         />
       );
@@ -91,6 +95,7 @@ Field.defaultProps = {
   name: "",
   className:"",
   errors: null,
+  disabled: null,
 };
 
 export default Field;

@@ -35,7 +35,7 @@ function Login() {
       <section className="sign-in-content">
         <i className="fa fa-user-circle sign-in-icon"></i>
         <h1>Sign In</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
           <Field
             placeholder=""
             label="Email"
@@ -61,10 +61,6 @@ function Login() {
           <Button type={BUTTON_TYPES.SUBMIT} disabled={isSubmitting}>
             Sign In
           </Button>
-
-          <Link to="../register" className="btn btn-link">
-            Register
-          </Link>
         </form>
       </section>
     </main>

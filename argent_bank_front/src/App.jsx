@@ -9,6 +9,8 @@ import Footer from "./containers/Footer";
 
 import "./App.scss";
 import MyAccount from "./pages/Account/MyAccount";
+import {Login} from "./pages/Account/Login";
+
 import Nav from './containers/Nav';
 
 
@@ -31,6 +33,7 @@ function App() {
                     </Route>
           {/* public */}
           <Route path="/" element={<Home />} />
+          <Route path="/account/login" element={<Login />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
      
