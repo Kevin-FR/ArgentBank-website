@@ -1,0 +1,13 @@
+.alert{
+    background-color: #ff7385;
+    min-height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    button{
+        height: 20px;
+        width: 20px;
+    }
+}
