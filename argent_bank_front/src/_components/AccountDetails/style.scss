@@ -1,0 +1,106 @@
+@import "../../settings.scss";
+
+.account {
+  &-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: $container-max-width;
+  }
+
+  &-detail {
+    &-header {
+      margin: 1em 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      background-color: $bg_dark;
+      color: white;
+      border-radius: 10px;
+      &.info {
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        padding-left: 20px;
+
+        span {
+          padding-top: 5px;
+          text-align: left;
+        }
+      }
+    }
+
+    &-table {
+      &.header{
+        padding: 1em 0;
+        color: white;
+      }
+      &.row-container{
+        border-radius: 10px;
+        background-color: $primary;
+        margin: 0.5em auto;
+        padding: 1em 0.5em;
+        color: white;
+      }
+
+      &.flex{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: normal;
+        align-items: normal;
+        align-content: normal;
+        & .item:nth-child(1) {
+          display: block;
+          width: 20%;
+          align-self: auto;
+          order: 0;
+        }
+        & .item:nth-child(2) {
+          display: block;
+          width: 40%;
+          align-self: auto;
+          order: 0;
+        }
+        & .item:nth-child(3) {
+          display: block;
+          width: 15%;
+          align-self: auto;
+          order: 0;
+        }
+        & .item:nth-child(4) {
+          display: block;
+          width: 15%;
+          align-self: auto;
+          order: 0;
+        }
+        & .item:nth-child(5) {
+          display: block;
+          width: 10%;
+          align-self: auto;
+          order: 0;
+        }
+      }
+      &.collapse .row{
+        display: flex;
+        flex-direction: row;
+        & .item{
+          display: flex;
+          flex-direction: column;
+          align-items: start;
+        }
+      }
+    }
+
+    &-button {
+      background-color: transparent;
+      border: none;
+      font-size: 60px;
+      padding-right: 20px;
+      cursor: pointer;
+    }
+
+  }
+
+}

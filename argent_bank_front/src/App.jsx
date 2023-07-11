@@ -9,7 +9,7 @@ import Footer from "./containers/Footer";
 
 import "./App.scss";
 import MyAccount from "./pages/Account/MyAccount";
-import {Login} from "./pages/Account/Login";
+import {Login} from "./pages/User/Login";
 
 import Nav from './containers/Nav';
 
@@ -30,7 +30,7 @@ function App() {
           {/* private */}
           <Route element={<PrivateRoute />}>
                         <Route path="my-account" element={<MyAccount />} />
-                    </Route>
+           </Route>
           {/* public */}
           <Route path="/" element={<Home />} />
           <Route path="/account/login" element={<Login />} />

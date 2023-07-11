@@ -5,14 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions } from '../../_store/auth.slice';
 
 function NavAuth() {
-  const auth = useSelector(x => x.auth.value);
+  const profile = useSelector(x => x.profile.value);
     const dispatch = useDispatch();
     const logout = () => dispatch(authActions.logout());
-  if (auth) {
+
+  if (profile) {
+
     return (
       <div>
         <Link className="main-nav-item" to="/my-account">
-          <i className="fa fa-user-circle"></i>{auth.firstName}
+          <i className="fa fa-user-circle"></i>{profile.body.firstName}
         </Link>
         <Link className="main-nav-item" onClick={logout}>
           <i className="fa fa-sign-out"></i>Logout

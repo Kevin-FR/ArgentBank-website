@@ -20,11 +20,10 @@ function Alert() {
     if (!alert) return null;
 
     return (
-        <div className="container">
+        <div className="container margin-center">
             <div className="m-3">
                 <div className={`alert alert-dismissible ${alert.type}`}>
-                    {alert.message}
-                    <button type="button" className="btn-close" onClick={() => dispatch(alertActions.clear())}></button>
+                    {alert.message} <i onClick={() => dispatch(alertActions.clear())} className="fa-solid fa-xmark"></i>
                 </div>
             </div>
         </div>

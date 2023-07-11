@@ -1,7 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { alertActions } from "./alert.slice";
-import { history, fetchWrapper } from "../_helpers";
+import { profileActions } from "./profile.slice";
+import { paramsActions } from "./params.slice";
+
+import { history } from "../_helpers";
 
 // create slice
 
@@ -36,64 +39,27 @@ function createReducers() {
 }
 
 function createExtraActions() {
-  const baseUrl = `${process.env.REACT_APP_API_URL}/user`;
 
   return {
     login: login(),
     logout: logout(),
-    profile: profile(),
   };
 
   function login() {
     return createAsyncThunk(
       `${name}/login`,
-      async function ({ email, password }, { dispatch }) {
+      async function (user, { dispatch }) {
         dispatch(alertActions.clear());
-        try {
-          // Connect for get token
-          const user = await fetchWrapper.post(`${baseUrl}/login`, {
-            email,
-            password,
-          });
-          // Store token
+        
           dispatch(authActions.setAuth(user));
-         // Get profile with token
-            const profile = await fetchWrapper.post(`${baseUrl}/profile`);
-            const merge = {
-              ...user.body,
-              ...profile.body,
-            };
-
-            // set auth user with profile in redux state
-            dispatch(authActions.setAuth(merge));
-
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem("user", JSON.stringify(merge));
-
+            localStorage.setItem("auth", JSON.stringify(user));
+            dispatch(profileActions.get());
             // get return url from location state or default to home page
             const { from } = history.location.state || {
               from: { pathname: "/" },
             };
             history.navigate(from);
-          
-
-          //
-        } catch (error) {
-          dispatch(alertActions.error(error));
-        }
-      }
-    );
-  }
-
-  function profile() {
-    return createAsyncThunk(
-      `${name}/profile`,
-      async function (arg, { dispatch }) {
-        dispatch(alertActions.clear());
-        const profile = await fetchWrapper.post(`${baseUrl}/profile`);
-        console.log(profile.body);
-        //dispatch(authActions.setAuth(profile));
-        //localStorage.setItem("user", JSON.stringify(profile));
       }
     );
   }
@@ -101,8 +67,10 @@ function createExtraActions() {
   function logout() {
     return createAsyncThunk(`${name}/logout`, function (arg, { dispatch }) {
       dispatch(authActions.setAuth(null));
+      dispatch(profileActions.setProfile(null));
+      dispatch(paramsActions.clear());
       localStorage.removeItem("auth");
-      localStorage.removeItem("user");
+      localStorage.removeItem("profile");
       history.navigate("/");
     });
   }

@@ -74,7 +74,7 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, className, label, name, placehol
 
   return (
     <div className={className} >
-      <span>{name ? name : label}</span>
+      <span>{label ? label : name}</span>
       {component}
       <div className="invalid-feedback">{errors}</div>
     </div>

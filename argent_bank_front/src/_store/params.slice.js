@@ -24,6 +24,7 @@ function createReducers() {
     return {
         store,
         clear
+    
     };
 
     function store(state, action) {

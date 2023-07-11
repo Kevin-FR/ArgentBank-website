@@ -4,10 +4,12 @@ import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import "./style.scss";
 
-import { authActions } from "../../_store";
-
 import Button, { BUTTON_TYPES } from "../../_components/Button";
 import Field, { FIELD_TYPES } from "../../_components/Field";
+import { fetchWrapper } from "../../_helpers/fetch-wrapper";
+import { authActions } from "../../_store/auth.slice";
+import { alertActions } from "../../_store/alert.slice";
+
 
 export { Login };
 
@@ -25,9 +27,21 @@ function Login() {
   const { register, handleSubmit, formState } = useForm(formOptions);
   const { errors, isSubmitting } = formState;
 
-  function onSubmit({ email, password }) {
-    return dispatch(authActions.login({ email, password }));
+  const onSubmit = async ({ email, password }) => {
+const baseUrl = `${process.env.REACT_APP_API_URL}/user`;
+   
+    try {
+      const user = await fetchWrapper.post(`${baseUrl}/login`, {
+        email,
+        password,
+      });
+      return dispatch(authActions.login(user));
+
+    } catch (error) {
+      dispatch(alertActions.error(error));
+    }
   }
+
 
   return (
     <main className="main bg-dark">
@@ -38,6 +52,7 @@ function Login() {
           <Field
             placeholder=""
             label="Email"
+            name="email"
             others={register("email")}
             errors={errors.email?.message}
             className={`form-control ${errors.email ? "is-invalid" : ""}`}
@@ -46,6 +61,7 @@ function Login() {
             type={FIELD_TYPES.INPUT_PASSWORD}
             others={register("password")}
             placeholder=""
+            name="password"
             label="Password"
             className={`form-control ${errors.password ? "is-invalid" : ""}`}
             errors={errors.password?.message}

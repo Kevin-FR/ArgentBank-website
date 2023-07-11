@@ -6,22 +6,22 @@ import Field from "../Field";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { authActions } from "../../_store";
+import { profileActions } from "../../_store";
 
 function UserHeader() {
   // form validation rules
   const validationSchema = Yup.object().shape({
-    username: Yup.string().min(5).required("Username is required"),
+    username: Yup.string().required("Username is required"),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
   // get functions to build form with useForm() hook
-  const { handleSubmit, formState } = useForm(formOptions);
+  const { register, handleSubmit, formState } = useForm(formOptions);
   const { errors, isSubmitting } = formState;
 
   const dispatch = useDispatch();
   const params = useSelector((x) => x.params.value);
-  const user = useSelector((x) => x.auth.value);
+  const profile = useSelector((x) => x.profile.value);
 
   function handleEdit() {
     return dispatch(paramsActions.store("edit_user_header"));
@@ -29,11 +29,14 @@ function UserHeader() {
   function handleCancel() {
     return dispatch(paramsActions.clear());
   }
-  function handleTest() {
-    return dispatch(authActions.profile());
-  }
 
-  function onSubmit({ username }) {}
+  function onSubmit({ username }) {
+    if(dispatch(profileActions.update({username}))){
+    return dispatch(paramsActions.clear());
+    };
+  }
+  if (!profile) return null;
+  const user = profile.body;
 
   if (params === "edit_user_header") {
     return (
@@ -42,7 +45,9 @@ function UserHeader() {
         <form className="user-header-edit" onSubmit={handleSubmit(onSubmit)}>
           <Field
             placeholder={user.userName}
+            name="username"
             label="User name"
+            others={register("username")}
             errors={errors.username?.message}
             className={`user-header-edit-form ${
               errors.username ? "is-invalid" : ""
@@ -66,9 +71,6 @@ function UserHeader() {
             </Button>
             <Button onClick={handleCancel} type={BUTTON_TYPES.DEFAULT}>
               Cancel
-            </Button>
-            <Button onClick={handleTest} type={BUTTON_TYPES.DEFAULT}>
-              TEST
             </Button>
           </div>
         </form>

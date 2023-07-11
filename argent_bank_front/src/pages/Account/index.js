@@ -1,1 +1,2 @@
-export * from './Login';
+export * from './MyAccount';
+export * from './DetailsAccount';
