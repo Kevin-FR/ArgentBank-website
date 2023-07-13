@@ -1,32 +1,31 @@
-/* istanbul ignore file */
 import PropTypes from "prop-types";
 import "./style.scss";
 import Button, { BUTTON_TYPES } from "../Button";
 import { useDispatch } from "react-redux";
 import { paramsActions } from "../../_store/params.slice";
 
-
-
 export const BALANCE_TYPES = {
   AVAILABLE: "Available Balance",
   CURRENT: "Current Balance",
 };
 
+// Afficher les numéros avec la vigule correspondant au format US
 function ShowNumber(n) {
   return Number(n).toLocaleString("en");
 }
 
-function AccountCard({ id, title, numTransaction, numMoney, balanceType}) {
+function AccountCard({ id, title, numTransaction, numMoney, balanceType }) {
   const dispatch = useDispatch();
 
- const handleDetails = () => {
+  // Ajouter dans redux les informations du compte dont on souhaite avoir les details des lignes bancaires pour le composants AccountDetails.
+  const handleDetails = () => {
     return dispatch(
       paramsActions.store({
         action: "account_detail",
-        account: { id, title, numTransaction, numMoney, balanceType},
+        account: { id, title, numTransaction, numMoney, balanceType },
       })
     );
-  }
+  };
 
   return (
     <section key={`account-card-${id}`} className="account container">

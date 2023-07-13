@@ -39,7 +39,6 @@ function createReducers() {
 }
 
 function createExtraActions() {
-
   return {
     login: login(),
     logout: logout(),
@@ -50,16 +49,16 @@ function createExtraActions() {
       `${name}/login`,
       async function (user, { dispatch }) {
         dispatch(alertActions.clear());
-        
-          dispatch(authActions.setAuth(user));
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem("auth", JSON.stringify(user));
-            dispatch(profileActions.get());
-            // get return url from location state or default to home page
-            const { from } = history.location.state || {
-              from: { pathname: "/" },
-            };
-            history.navigate(from);
+
+        dispatch(authActions.setAuth(user));
+        // store user details and jwt token in local storage to keep user logged in between page refreshes
+        localStorage.setItem("auth", JSON.stringify(user));
+        dispatch(profileActions.get());
+        // get return url from location state or default to home page
+        const { from } = history.location.state || {
+          from: { pathname: "/" },
+        };
+        history.navigate(from);
       }
     );
   }

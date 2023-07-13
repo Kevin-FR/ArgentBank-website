@@ -1,8 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 // create slice
 
-const name = 'params';
+const name = "params";
 const initialState = createInitialState();
 const reducers = createReducers();
 const slice = createSlice({ name, initialState, reducers });
@@ -15,24 +15,22 @@ export const paramsReducer = slice.reducer;
 // implementation
 
 function createInitialState() {
-    return {
-        value: null
-    }
+  return {
+    value: null,
+  };
 }
 
 function createReducers() {
-    return {
-        store,
-        clear
-    
-    };
+  return {
+    store,
+    clear,
+  };
 
-    function store(state, action) {
-        state.value = action.payload?.message || action.payload;
-    }
+  function store(state, action) {
+    state.value = action.payload?.message || action.payload;
+  }
 
-
-    function clear(state) {
-            state.value = null;
-    }
+  function clear(state) {
+    state.value = null;
+  }
 }

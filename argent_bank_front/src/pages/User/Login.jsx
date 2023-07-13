@@ -10,38 +10,36 @@ import { fetchWrapper } from "../../_helpers/fetch-wrapper";
 import { authActions } from "../../_store/auth.slice";
 import { alertActions } from "../../_store/alert.slice";
 
-
 export { Login };
 
 function Login() {
   const dispatch = useDispatch();
 
-  // form validation rules
+  // Regles de validation du formulaire login
   const validationSchema = Yup.object().shape({
     email: Yup.string().required("Email is required"),
     password: Yup.string().required("Password is required"),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
-  // get functions to build form with useForm() hook
+  // Recupérer avec les états si le formulaire est bien remplis
   const { register, handleSubmit, formState } = useForm(formOptions);
   const { errors, isSubmitting } = formState;
 
+  // Se connecter avec l'aide du helper fetchWrapper et retourner les erreurs si necessaire.
   const onSubmit = async ({ email, password }) => {
-const baseUrl = `${process.env.REACT_APP_API_URL}/user`;
-   
+    const baseUrl = `${process.env.REACT_APP_API_URL}/user`;
+
     try {
       const user = await fetchWrapper.post(`${baseUrl}/login`, {
         email,
         password,
       });
       return dispatch(authActions.login(user));
-
     } catch (error) {
       dispatch(alertActions.error(error));
     }
-  }
-
+  };
 
   return (
     <main className="main bg-dark">

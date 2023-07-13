@@ -9,7 +9,18 @@ export const FIELD_TYPES = {
   TEXTAREA: 4,
 };
 
-const Field = ({ type = FIELD_TYPES.INPUT_TEXT, className, label, name, placeholder, onChange, errors, others, value, disabled}) => {
+const Field = ({
+  type = FIELD_TYPES.INPUT_TEXT,
+  className,
+  label,
+  name,
+  placeholder,
+  onChange,
+  errors,
+  others,
+  value,
+  disabled,
+}) => {
   let component;
   switch (type) {
     case FIELD_TYPES.INPUT_TEXT:
@@ -21,7 +32,7 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, className, label, name, placehol
           data-testid="field-testid"
           onChange={onChange}
           className={disabled ? `inputField inputField-disabled` : `inputField`}
-          disabled = {disabled}
+          disabled={disabled}
           value={value}
           {...others}
         />
@@ -71,9 +82,8 @@ const Field = ({ type = FIELD_TYPES.INPUT_TEXT, className, label, name, placehol
       );
   }
 
-
   return (
-    <div className={className} >
+    <div className={className}>
       <span>{label ? label : name}</span>
       {component}
       <div className="invalid-feedback">{errors}</div>
@@ -93,7 +103,7 @@ Field.defaultProps = {
   placeholder: "",
   type: FIELD_TYPES.INPUT_TEXT,
   name: "",
-  className:"",
+  className: "",
   errors: null,
   disabled: null,
 };

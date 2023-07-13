@@ -6,16 +6,15 @@ import Collapse from "./collapse";
 import { useState } from "react";
 
 export const TRANSACTION_TYPE = {
-  "ELECTRONIC": "Electronic",
-  "CASH": "Cash",
+  ELECTRONIC: "Electronic",
+  CASH: "Cash",
 };
 
-
 export const CATEGORY_NAME = {
-  "FOOD": "Food",
-  "SCHOOL": "School",
-  "CAR": "Car",
-  "HOME": "Home",
+  FOOD: "Food",
+  SCHOOL: "School",
+  CAR: "Car",
+  HOME: "Home",
 };
 
 const data = [
@@ -61,11 +60,12 @@ const data = [
     amout: "8.00",
     balance: "298.00",
     transactionType: `${TRANSACTION_TYPE.ELECTRONIC}`,
-    category:`${CATEGORY_NAME.CAR}`,
+    category: `${CATEGORY_NAME.CAR}`,
     note: "lorem ipsum",
   },
 ];
 
+// Ajouter les details d'un compte dans redux pour afficher le detail du compte.
 function AccountDetails() {
   const dispatch = useDispatch();
   const params = useSelector((x) => x.params.value);
@@ -73,21 +73,22 @@ function AccountDetails() {
     return Number(n).toLocaleString("en");
   }
 
+  // Supprimer le redux params pour fermer les details d'un compte
   function handleCancel() {
     return dispatch(paramsActions.clear());
   }
 
-
+  // State pour collapse
   const [panel, setPanel] = useState(0);
 
+  // Ouvrir le collapse en changeant le state qui lui correspond
   const handleCollapse = (id) => {
-    if(id + 1 === panel){
+    if (id + 1 === panel) {
       setPanel(() => 0);
-    }else{
-    setPanel(() => id + 1);
+    } else {
+      setPanel(() => id + 1);
     }
   };
-
 
   return (
     <main key={`account-detail-${params.account.id}`} className="main bg-dark">
@@ -97,7 +98,9 @@ function AccountDetails() {
             <span>
               {params.account.title} (x{params.account.numTransaction})
             </span>
-            <span className="font-XL">${ShowNumber(params.account.numMoney)}</span>
+            <span className="font-XL">
+              ${ShowNumber(params.account.numMoney)}
+            </span>
             <span className="font-S">{params.account.balanceType}</span>
           </div>
           <div>
@@ -110,7 +113,11 @@ function AccountDetails() {
             </Button>
           </div>
         </div>
-        <div className="account-detail-table header" role="table" aria-label="Destinations">
+        <div
+          className="account-detail-table header"
+          role="table"
+          aria-label="Destinations"
+        >
           <div className="account-detail-table flex row" role="rowgroup">
             <div className="account-detail-table item" role="columnheader">
               Date
@@ -130,28 +137,41 @@ function AccountDetails() {
           </div>
 
           {data.map((d, id) => (
-            <div key={`account-detail-${params.account.id}-${id}`} className="account-detail-table row-container">
-            <div className="account-detail-table flex row" role="rowgroup">
-              <div className="account-detail-table item" role="cell">
-                {d.date}
+            <div
+              key={`account-detail-${params.account.id}-${id}`}
+              className="account-detail-table row-container"
+            >
+              <div className="account-detail-table flex row" role="rowgroup">
+                <div className="account-detail-table item" role="cell">
+                  {d.date}
+                </div>
+                <div className="account-detail-table item" role="cell">
+                  {d.description}
+                </div>
+                <div className="account-detail-table item" role="cell">
+                  ${d.amout}
+                </div>
+                <div className="account-detail-table item" role="cell">
+                  ${d.balance}
+                </div>
+                <div
+                  className="account-detail-table item cursor"
+                  role="cell"
+                  onClick={() => handleCollapse(id)}
+                >
+                  <i className="fa-solid fa-chevron-down"></i>
+                </div>
               </div>
-              <div className="account-detail-table item" role="cell">
-                {d.description}
-              </div>
-              <div className="account-detail-table item" role="cell">
-                ${d.amout}
-              </div>
-              <div className="account-detail-table item" role="cell" >
-                ${d.balance}
-              </div>
-              <div className="account-detail-table item cursor" role="cell" onClick={() => handleCollapse(id)}>
-              <i className="fa-solid fa-chevron-down"></i>
-              </div>
-            </div>
-            { panel === id + 1
-                ? <Collapse id={id} transactionType={d.transactionType} category={d.category}  note={d.note}/>
-                : ""
-                }
+              {panel === id + 1 ? (
+                <Collapse
+                  id={id}
+                  transactionType={d.transactionType}
+                  category={d.category}
+                  note={d.note}
+                />
+              ) : (
+                ""
+              )}
             </div>
           ))}
         </div>

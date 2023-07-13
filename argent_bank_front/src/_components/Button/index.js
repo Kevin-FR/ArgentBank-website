@@ -66,6 +66,6 @@ Button.defaultProps = {
   title: "",
   children: null,
   className: "",
-}
+};
 
 export default Button;

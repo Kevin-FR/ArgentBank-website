@@ -31,9 +31,9 @@ function UserHeader() {
   }
 
   function onSubmit({ username }) {
-    if(dispatch(profileActions.update({username}))){
-    return dispatch(paramsActions.clear());
-    };
+    if (dispatch(profileActions.update({ username }))) {
+      return dispatch(paramsActions.clear());
+    }
   }
   if (!profile) return null;
   const user = profile.body;
