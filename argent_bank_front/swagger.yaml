@@ -1,0 +1,537 @@
+openapi: 3.0.1
+info:
+  title: Bank Argent API transaction documentation
+  description: Sample suggestion for Argent Bank API's transactions model. Check  my
+    [Argent Bank Frontend repository](https://github.com/Kevin-FR/ArgentBank-website)
+  termsOfService: http://swagger.io/terms/
+  version: 1.0.0
+servers:
+- url: https://localhost:3001/api/v1
+paths:
+  /user/login:
+    post:
+      tags:
+      - User Module
+      summary: Login
+      description: API for Login
+      requestBody:
+        description: Login Payload
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      responses:
+        200:
+          description: Login Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        400:
+          description: Invalid Fields
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+      x-codegen-request-body-name: body
+  /user/signup:
+    post:
+      tags:
+      - User Module
+      summary: Signup
+      description: API for Signup
+      requestBody:
+        description: Signup Payload
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        200:
+          description: Signup Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        400:
+          description: Invalid Fields
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+      x-codegen-request-body-name: body
+  /user/profile:
+    put:
+      tags:
+      - User Module
+      summary: User Profile API
+      description: API for updating a user profile
+      parameters:
+      - name: Authorization
+        in: header
+        description: Attach Bearer JWT token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Update user profile attributes
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+        required: true
+      responses:
+        200:
+          description: User profile retrieved successully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        400:
+          description: Invalid Fields
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+      security:
+      - Bearer: []
+      x-codegen-request-body-name: body
+    post:
+      tags:
+      - User Module
+      summary: User Profile API
+      description: API for fetching a user profile
+      parameters:
+      - name: Authorization
+        in: header
+        description: Attach Bearer JWT token
+        required: true
+        schema:
+          type: string
+      schema:
+          type: string
+      requestBody:
+        description: Update user profile attributes
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+        required: true
+      responses:
+        200:
+          description: User profile retrieved successully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        400:
+          description: Invalid Fields
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+      security:
+      - Bearer: []
+  /my-account:
+    get:
+      tags:
+      - Account Module
+      summary: Summery all account
+      description: Get state all account
+      parameters:
+      - name: Authorization
+        in: header
+        description: Authorization Bearer JWT token
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionsResponse'
+        400:
+          description: Invalid account ID supplied
+          content: {}
+        404:
+          description: Account not found
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+      security:
+      - Bearer: []
+      x-codegen-request-body-name: Dates
+  /my-account/{accountId}:
+    get:
+      tags:
+      - Account Module
+      summary: Last 30 Transaction's from specific account
+      description: Get the 30 transaction's from specific account
+      operationId: getCategoriesByTransactionId
+      parameters:
+      - name: Autorization
+        in: header
+        description: Attach Bearer JWT token
+        required: true
+        schema:
+          type: string
+      - name: accountId
+        in: path
+        description: Account ID
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoriesResponse'
+        400:
+          description: Invalid transaction Id supplied
+          content: {}
+        404:
+          description: Category not found
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+      security:
+      - Bearer: []
+  /my-account/{accountId}/search/{periode}:
+    get:
+      tags:
+      - Account Module
+      summary: Transaction's from specific account with periode
+      description: Get the transaction's from specific account with define periode
+      operationId: getAccountPeriode
+      parameters:
+      - name: Autorization
+        in: header
+        description: Attach Bearer JWT token
+        required: true
+        schema:
+          type: string
+      - name: accountId
+        in: path
+        description: Account ID
+        required: true
+        schema:
+          type: number
+      requestBody:
+        description: Transaction's period to get
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionsDate'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoriesResponse'
+        400:
+          description: Invalid transaction Id supplied
+          content: {}
+        404:
+          description: Category not found
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+      security:
+      - Bearer: []
+  /my-account/{accountId}/detail/{transactionId}:
+    get:
+      tags:
+      - Account Module
+      summary: Transaction details
+      description: Get the chosen transaction's details
+      operationId: getTransactionById
+      parameters:
+      - name: Authorization
+        in: header
+        description: Authorization Bearer JWT token
+        required: true
+        schema:
+          type: string
+      - name: transactionId
+        in: path
+        description: Transaction ID
+        required: true
+        schema:
+          type: number
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailsResponse'
+        400:
+          description: Invalid transaction Id supplied
+          content: {}
+        404:
+          description: Transaction not found
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+      security:
+      - Bearer: []
+    put:
+      tags:
+      - Account Module
+      summary: Update the information from current transaction
+      description: Update the information from current transaction
+      operationId: upDateTransactionById
+      parameters:
+      - name: Authorization
+        in: header
+        description: Authorization Bearer JWT token
+        required: true
+        schema:
+          type: string
+      - name: transactionId
+        in: path
+        description: Transaction ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Update transaction's category
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditableDetails'
+        required: true
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailsResponse'
+        400:
+          description: Invalid transaction Id supplied
+          content: {}
+        404:
+          description: Transaction not found
+          content: {}
+        500:
+          description: Internal Server Error
+          content: {}
+      security:
+      - Bearer: []
+      x-codegen-request-body-name: Category
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+          description: user email
+        password:
+          type: string
+          description: user password
+        firstName:
+          type: string
+          description: user first name
+        lastName:
+          type: string
+          description: user last name
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+          description: user email
+        password:
+          type: string
+          description: user password
+    ApiResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+        body:
+          type: object
+          properties:
+            id:
+              type: string
+            email:
+              type: string
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+    UserProfile:
+      type: object
+      properties:
+        userName:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+    TransactionsResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int64
+          example: 200
+        message:
+          type: string
+          format: string
+          example: 'success : transactions fetched'
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/Informations'
+      xml:
+        name: Transactions
+    DetailsResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int64
+          example: 200
+        message:
+          type: string
+          format: string
+          example: 'success : transaction''s details fetched'
+        schema:
+          $ref: '#/components/schemas/Details'
+      xml:
+        name: Details
+    CategoriesResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int64
+          example: 200
+        message:
+          type: string
+          format: string
+          example: 'success : transaction''s category fetched'
+        schema:
+          $ref: '#/components/schemas/Categories'
+      xml:
+        name: Details
+    Informations:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          description: Transaction ID
+          example: "951266578456456454894"
+        date:
+          type: string
+          description: transaction date
+          format: date-time
+          example: 2023-03-21T08:24:56.234Z
+        description:
+          type: string
+          description: transaction description
+          example: Golden Sun Bakery
+        amount:
+          type: integer
+          description: transaction amount
+          format: int64
+          example: 5
+        balance:
+          type: integer
+          description: account balance after transaction
+          format: int64
+      xml:
+        name: Transaction
+    Categories:
+      type: array
+      xml:
+        name: Categories
+      items:
+        $ref: '#/components/schemas/CategoryList'
+    Details:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          description: Transaction ID
+          example: "951266578456456454894"
+        type:
+          type: string
+          description: Transaction type
+          example: Electronic
+        category:
+          type: string
+          description: transaction category
+          example: Food
+        notes:
+          type: string
+          description: transaction notes
+          example: Out with the friends
+      xml:
+        name: Category
+    EditableDetails:
+      type: object
+      properties:
+        category:
+          type: string
+          description: Transaction category 
+        notes:
+          type: string
+          description: Transaction notes
+      xml:
+        name: TransactionDetails
+    TransactionsDate:
+      type: object
+      properties:
+        from:
+          type: string
+          description: start date of period to get
+          format: date
+          example: 2023-01-19
+        to:
+          type: string
+          description: end date of period to get
+          format: date
+          example: 2023-08-03
+      xml:
+        name: TransactionsDate
+    CategoryList:
+      type: string
+      enum:
+      - Food
+      - Home
+      - Mobility
+      - Energy
+      - School
+      - Holidays
+      - Other
+    TransactionTypeList:
+      type: string
+      enum:
+      - Electronic
+      - Cash
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
