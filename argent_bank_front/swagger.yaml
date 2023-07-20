@@ -154,8 +154,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionsResponse'
-        400:
-          description: Invalid account ID supplied
+        403:
+          description: Forbidden access for my account
           content: {}
         404:
           description: Account not found
@@ -193,11 +193,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CategoriesResponse'
-        400:
-          description: Invalid transaction Id supplied
+        403:
+          description: Forbidden access for this account
           content: {}
         404:
-          description: Category not found
+          description: Accounts not found
           content: {}
         500:
           description: Internal Server Error
@@ -238,11 +238,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CategoriesResponse'
-        400:
-          description: Invalid transaction Id supplied
+        403:
+          description: Forbidden access for this periode
           content: {}
         404:
-          description: Category not found
+          description: periode not found
           content: {}
         500:
           description: Internal Server Error
@@ -276,8 +276,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DetailsResponse'
-        400:
-          description: Invalid transaction Id supplied
+        403:
+          description: Forbidden access for this transaction
           content: {}
         404:
           description: Transaction not found
@@ -320,6 +320,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DetailsResponse'
+        403:
+          description: Forbidden access for this transaction
+          content: {}
         400:
           description: Invalid transaction Id supplied
           content: {}
